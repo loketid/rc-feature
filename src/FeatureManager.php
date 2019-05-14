@@ -15,6 +15,10 @@ class FeatureManager {
     public function isEnabled(string $feature):bool {
         return $this->features[$feature] == self::CONDITION_ENABLED;
     }
+
+    public function getConfiguration(string $feature):string {
+        return $this->features[$feature];
+    }
 }
 
 ?>

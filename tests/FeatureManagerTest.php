@@ -26,6 +26,18 @@ class FeatureManagerTest extends TestCase {
 
         $this->assertEquals($expected, $instance->isEnabled($featureName));
     }
+
+    function testGetConfigurationFromFeature() {
+        $featureName = "feature-1";
+        $featureConfig = "new-relic";
+        $dataSource = $this->createMock(DriverManager::class);
+        $dataSource->method('fetchAllValue')->willReturn([$featureName => $featureConfig]);
+
+        $instance = new FeatureManager($dataSource);
+        $expected = $featureConfig;
+
+        $this->assertEquals($expected, $instance->getConfiguration($featureName));
+    }
 }
 
 ?>
