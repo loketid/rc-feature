@@ -1,0 +1,15 @@
+Session.vim
+*.tmproj
+*.tmproject
+tmtags
+Thumbs.db
+Desktop.ini
+
+.DS_Store
+.idea
+.vscode
+.iml
+
+/vendor/*
+
+.phpunit.result.cache

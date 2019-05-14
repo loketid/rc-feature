@@ -1,0 +1,15 @@
+{
+    "name": "loket/rc-feature",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Rizki Maulana Akbar",
+            "email": "rizkimaulanaakbar@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.2@dev"
+    }
+}
