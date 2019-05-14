@@ -8,11 +8,11 @@ class FeatureManager {
 
     private $features;
 
-    public function __construct($dataSource){
+    public function __construct(DriverManager $dataSource){
         $this->features = $dataSource->fetchAllValue();
     }
 
-    public function isEnabled($feature) {
+    public function isEnabled(string $feature):bool {
         return $this->features[$feature] == self::CONDITION_ENABLED;
     }
 }
