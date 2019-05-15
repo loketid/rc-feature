@@ -21,15 +21,13 @@ class FeatureManagerTest extends TestCase {
 
     function testFeatureIsEnabledWithDefaultValue() {
         $featureName = "feature-1";
-        $anotherFeatureName = "feature-2";
 
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('fetch')->willReturn([$featureName => self::CONDITION_ENABLED]);
 
-        $instance = new FeatureManager($dataSource, [$anotherFeatureName => self::CONDITION_ENABLED]);
+        $instance = new FeatureManager($dataSource, [$featureName => self::CONDITION_ENABLED]);
         $expected = true;
 
-        $this->assertEquals($expected, $instance->isEnabled($anotherFeatureName));
+        $this->assertEquals($expected, $instance->isEnabled($featureName));
     }
 
     function testFeatureIsDisabledWithUndefinedKey() {
