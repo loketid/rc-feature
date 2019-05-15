@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 class FeatureManagerTest extends TestCase {
     function testFeatureIsEnabled() {
         $featureName = "feature-1";
-        $dataSource = $this->createMock(DriverManager::class);
+        $dataSource = $this->createMock(ConnectionDriver::class);
         $dataSource->method('fetchAllValue')->willReturn([$featureName => 1]);
 
         $instance = new FeatureManager($dataSource);
@@ -18,7 +18,7 @@ class FeatureManagerTest extends TestCase {
 
     function testFeatureIsDisabled() {
         $featureName = "feature-1";
-        $dataSource = $this->createMock(DriverManager::class);
+        $dataSource = $this->createMock(ConnectionDriver::class);
         $dataSource->method('fetchAllValue')->willReturn([$featureName => 0]);
 
         $instance = new FeatureManager($dataSource);
@@ -30,7 +30,7 @@ class FeatureManagerTest extends TestCase {
     function testGetConfigurationFromFeature() {
         $featureName = "feature-1";
         $featureConfig = "new-relic";
-        $dataSource = $this->createMock(DriverManager::class);
+        $dataSource = $this->createMock(ConnectionDriver::class);
         $dataSource->method('fetchAllValue')->willReturn([$featureName => $featureConfig]);
 
         $instance = new FeatureManager($dataSource);
