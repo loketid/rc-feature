@@ -28,7 +28,7 @@ class FeatureManager {
         }
     }
 
-    public function getRemoteConfiguration(string $feature): string {
+    public function getRemoteConfiguration(string $feature): ?string {
         return isset($this->features[$feature]) ? $this->features[$feature] : $this->defaultConfig[$feature];
     }
 

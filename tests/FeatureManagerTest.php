@@ -82,6 +82,19 @@ class FeatureManagerTest extends TestCase {
         $this->assertEquals($expected, $instance->getRemoteConfiguration($anotherFeatureName));
     }
 
+    function testGetConfigurationFromFeatureWithUndefinedKey() {
+        $featureName = "feature-1";
+        $featureConfig = "new-relic";
+        $undefinedFeatureName = "feature-2";
+        $dataSource = $this->createMock(ConnectionDriver::class);
+        $dataSource->method('fetch')->willReturn([$featureName => $featureConfig]);
+
+        $instance = new FeatureManager($dataSource);
+        $expected = null;
+
+        $this->assertEquals($expected, $instance->getRemoteConfiguration($undefinedFeatureName));
+    }
+
     function testUpdateAllConfiguration() {
         $featureName = "feature-1";
         $featureConfig = "new-relic";
