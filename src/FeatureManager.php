@@ -36,13 +36,13 @@ class FeatureManager {
         return $this->fetchConfigurationData();
     }
 
-    public function updateAll(array $config) {
-        $this->dataSource->updateAllValue($config);
+    public function update(array $config) {
+        $this->dataSource->update($config);
         return $this->fetchConfigurationData();
     }
 
     private function fetchConfigurationData():array {
-        $this->features = $this->dataSource->fetchAllValue();
+        $this->features = $this->dataSource->fetch();
         return $this->features;
     }
 }

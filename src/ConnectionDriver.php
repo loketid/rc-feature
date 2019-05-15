@@ -3,10 +3,10 @@
 namespace RCFeature;
 
 interface ConnectionDriver {
-    function fetchAllValue();
+    function fetch();
     function disable(string $feature): bool;
     function enable(string $feature): bool;
-    function updateAllValue($config): bool;
+    function update($config): bool;
 }
 
 ?>

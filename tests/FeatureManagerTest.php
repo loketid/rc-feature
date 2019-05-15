@@ -11,7 +11,7 @@ class FeatureManagerTest extends TestCase {
     function testFeatureIsEnabled() {
         $featureName = "feature-1";
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('fetchAllValue')->willReturn([$featureName => self::CONDITION_ENABLED]);
+        $dataSource->method('fetch')->willReturn([$featureName => self::CONDITION_ENABLED]);
 
         $instance = new FeatureManager($dataSource);
         $expected = true;
@@ -22,7 +22,7 @@ class FeatureManagerTest extends TestCase {
     function testFeatureIsDisabled() {
         $featureName = "feature-1";
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('fetchAllValue')->willReturn([$featureName => self::CONDITION_DISABLED]);
+        $dataSource->method('fetch')->willReturn([$featureName => self::CONDITION_DISABLED]);
 
         $instance = new FeatureManager($dataSource);
         $expected = false;
@@ -34,7 +34,7 @@ class FeatureManagerTest extends TestCase {
         $featureName = "feature-1";
         $featureConfig = "new-relic";
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('fetchAllValue')->willReturn([$featureName => $featureConfig]);
+        $dataSource->method('fetch')->willReturn([$featureName => $featureConfig]);
 
         $instance = new FeatureManager($dataSource);
         $expected = $featureConfig;
@@ -46,19 +46,19 @@ class FeatureManagerTest extends TestCase {
         $featureName = "feature-1";
         $featureConfig = "new-relic";
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('updateAllValue')->willReturn(true);
-        $dataSource->method('fetchAllValue')->willReturn([$featureName => $featureConfig]);
+        $dataSource->method('update')->willReturn(true);
+        $dataSource->method('fetch')->willReturn([$featureName => $featureConfig]);
 
         $instance = new FeatureManager($dataSource);
         $expected = [$featureName => $featureConfig];
 
-        $this->assertEquals($expected, $instance->updateAll([$featureName => $featureConfig]));
+        $this->assertEquals($expected, $instance->update([$featureName => $featureConfig]));
     }
 
     function testEnableFeature() {
         $featureName = "feature-1";
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('fetchAllValue')
+        $dataSource->method('fetch')
             ->will($this->onConsecutiveCalls([$featureName => self::CONDITION_DISABLED], [$featureName => self::CONDITION_ENABLED]));
         $dataSource->method('enable')->willReturn(true);
 
@@ -78,7 +78,7 @@ class FeatureManagerTest extends TestCase {
     function testDisableFeature() {
         $featureName = "feature-1";
         $dataSource = $this->createMock(ConnectionDriver::class);
-        $dataSource->method('fetchAllValue')
+        $dataSource->method('fetch')
             ->will($this->onConsecutiveCalls([$featureName => self::CONDITION_ENABLED], [$featureName => self::CONDITION_DISABLED]));
         $dataSource->method('disable')->willReturn(true);
 

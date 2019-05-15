@@ -15,7 +15,7 @@ class RedisConnectionDriver implements ConnectionDriver {
         $this->configKey = $app_name;
     }
 
-    function fetchAllValue(): array {
+    function fetch(): array {
         $this->client->hgetall($this->configKey);
     }
 
@@ -27,7 +27,7 @@ class RedisConnectionDriver implements ConnectionDriver {
         return $this->client->hset($this->configKey, $feature, 1) == 1;
     }
 
-    function updateAllValue($config): bool {
+    function update($config): bool {
         return $this->client->hmset($this->configKey, $config) == 1;
     }
 }
