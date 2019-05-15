@@ -50,9 +50,11 @@ class FeatureManagerTest extends TestCase {
         $dataSource->method('fetch')->willReturn([$featureName => $featureConfig]);
 
         $instance = new FeatureManager($dataSource);
-        $expected = [$featureName => $featureConfig];
+        $expected = $featureConfig;
 
-        $this->assertEquals($expected, $instance->update([$featureName => $featureConfig]));
+        $instance->update([$featureName => $featureConfig]);
+
+        $this->assertEquals($expected, $instance->getConfiguration($featureName));
     }
 
     function testEnableFeature() {
@@ -65,13 +67,10 @@ class FeatureManagerTest extends TestCase {
         $instance = new FeatureManager($dataSource);
 
         $initialState = false;
-
         $this->assertEquals($initialState, $instance->isEnabled($featureName));
-
-        $instance = new FeatureManager($dataSource);
+        $instance->enable($featureName);
 
         $expected = true;
-
         $this->assertEquals($expected, $instance->isEnabled($featureName));
     }
 
@@ -85,13 +84,10 @@ class FeatureManagerTest extends TestCase {
         $instance = new FeatureManager($dataSource);
 
         $initialState = true;
-
         $this->assertEquals($initialState, $instance->isEnabled($featureName));
-
-        $instance = new FeatureManager($dataSource);
+        $instance->disable($featureName);
 
         $expected = false;
-
         $this->assertEquals($expected, $instance->isEnabled($featureName));
     }
 }

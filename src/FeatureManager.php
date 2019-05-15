@@ -11,7 +11,7 @@ class FeatureManager {
 
     public function __construct(ConnectionDriver $dataSource, array $defaultConfig = null) {
         $this->dataSource = $dataSource;
-        $this->fetchConfigurationData();
+        $this->features = $this->dataSource->fetch();
 
         if ($this->features == null && $defaultConfig != null) {
             $this->features = $defaultConfig;
@@ -26,24 +26,28 @@ class FeatureManager {
         return $this->features[$feature];
     }
 
-    public function enable(string $feature): array {
-        $this->dataSource->enable($feature);
-        return $this->fetchConfigurationData();
+    public function enable(string $feature): bool {
+        if ($this->dataSource->enable($feature)) {
+            $this->features = $this->dataSource->fetch();
+            return true;
+        }
+        return false;
     }
 
-    public function disable(string $feature): array {
-        $this->dataSource->disable($feature);
-        return $this->fetchConfigurationData();
+    public function disable(string $feature): bool {
+        if ($this->dataSource->disable($feature)) {
+            $this->features = $this->dataSource->fetch();
+            return true;
+        }
+        return false;
     }
 
-    public function update(array $config): array {
-        $this->dataSource->update($config);
-        return $this->fetchConfigurationData();
-    }
-
-    private function fetchConfigurationData(): array {
-        $this->features = $this->dataSource->fetch();
-        return $this->features;
+    public function update(array $config): bool {
+        if ($this->dataSource->update($config)) {
+            $this->features = $this->dataSource->fetch();
+            return true;
+        }
+        return false;
     }
 }
 
