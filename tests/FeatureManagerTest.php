@@ -38,6 +38,19 @@ class FeatureManagerTest extends TestCase {
 
         $this->assertEquals($expected, $instance->getConfiguration($featureName));
     }
+
+    function testUpdateAllConfiguration() {
+        $featureName = "feature-1";
+        $featureConfig = "new-relic";
+        $dataSource = $this->createMock(ConnectionDriver::class);
+        $dataSource->method('updateAllValue')->willReturn(true);
+        $dataSource->method('fetchAllValue')->willReturn([$featureName => $featureConfig]);
+
+        $instance = new FeatureManager($dataSource);
+        $expected = [$featureName => $featureConfig];
+
+        $this->assertEquals($expected, $instance->updateAll([$featureName => $featureConfig]));
+    }
 }
 
 ?>

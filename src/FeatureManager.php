@@ -26,18 +26,24 @@ class FeatureManager {
         return $this->features[$feature];
     }
 
-    public function enable(string $feature) {
+    public function enable(string $feature):array {
         $this->dataSource->enable($feature);
-        $this->fetchConfigurationData();
+        return $this->fetchConfigurationData();
     }
 
-    public function disable(string $feature) {
+    public function disable(string $feature):array {
         $this->dataSource->disable($feature);
-        $this->fetchConfigurationData();
+        return $this->fetchConfigurationData();
     }
 
-    private function fetchConfigurationData() {
+    public function updateAll(array $config) {
+        $this->dataSource->updateAllValue($config);
+        return $this->fetchConfigurationData();
+    }
+
+    private function fetchConfigurationData():array {
         $this->features = $this->dataSource->fetchAllValue();
+        return $this->features;
     }
 }
 
