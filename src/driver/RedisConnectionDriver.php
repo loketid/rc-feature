@@ -6,7 +6,6 @@ use Predis\Client;
 use RCFeature\ConnectionDriver;
 
 class RedisConnectionDriver implements ConnectionDriver {
-
     private $client;
     private $configKey;
 
@@ -19,11 +18,11 @@ class RedisConnectionDriver implements ConnectionDriver {
         $this->client->hgetall($this->configKey);
     }
 
-    function disable(string $feature):bool {
+    function disable(string $feature): bool {
         return $this->client->hset($this->configKey, $feature, 0) == 1;
     }
 
-    function enable(string $feature):bool {
+    function enable(string $feature): bool {
         return $this->client->hset($this->configKey, $feature, 1) == 1;
     }
 
