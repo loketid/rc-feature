@@ -15,7 +15,7 @@ class RedisConnectionDriver implements ConnectionDriver {
     }
 
     function fetch(): array {
-        $this->client->hgetall($this->configKey);
+        return $this->client->hgetall($this->configKey);
     }
 
     function disable(string $feature): bool {

@@ -19,6 +19,19 @@ class FeatureManagerTest extends TestCase {
         $this->assertEquals($expected, $instance->isEnabled($featureName));
     }
 
+    function testFeatureIsEnabledWithDefaultValue() {
+        $featureName = "feature-1";
+        $anotherFeatureName = "feature-2";
+
+        $dataSource = $this->createMock(ConnectionDriver::class);
+        $dataSource->method('fetch')->willReturn([$featureName => self::CONDITION_ENABLED]);
+
+        $instance = new FeatureManager($dataSource, [$anotherFeatureName => self::CONDITION_ENABLED]);
+        $expected = true;
+
+        $this->assertEquals($expected, $instance->isEnabled($anotherFeatureName));
+    }
+
     function testFeatureIsDisabled() {
         $featureName = "feature-1";
         $dataSource = $this->createMock(ConnectionDriver::class);
@@ -39,7 +52,7 @@ class FeatureManagerTest extends TestCase {
         $instance = new FeatureManager($dataSource);
         $expected = $featureConfig;
 
-        $this->assertEquals($expected, $instance->getConfiguration($featureName));
+        $this->assertEquals($expected, $instance->getRemoteConfiguration($featureName));
     }
 
     function testUpdateAllConfiguration() {
@@ -54,7 +67,7 @@ class FeatureManagerTest extends TestCase {
 
         $instance->update([$featureName => $featureConfig]);
 
-        $this->assertEquals($expected, $instance->getConfiguration($featureName));
+        $this->assertEquals($expected, $instance->getRemoteConfiguration($featureName));
     }
 
     function testEnableFeature() {

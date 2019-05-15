@@ -8,22 +8,28 @@ class FeatureManager {
 
     private $features;
     private $dataSource;
+    private $defaultConfig;
 
     public function __construct(ConnectionDriver $dataSource, array $defaultConfig = null) {
         $this->dataSource = $dataSource;
         $this->features = $this->dataSource->fetch();
+        $this->defaultConfig = $defaultConfig;
 
-        if ($this->features == null && $defaultConfig != null) {
+        if (($this->features == null || count($this->features) == 0) && $defaultConfig != null) {
             $this->features = $defaultConfig;
         }
     }
 
     public function isEnabled(string $feature): bool {
-        return $this->features[$feature] == self::CONDITION_ENABLED;
+        if (isset($this->features[$feature])) {
+            return $this->features[$feature] == self::CONDITION_ENABLED;
+        } else {
+            return isset($this->defaultConfig[$feature]) ? $this->defaultConfig[$feature] : false;
+        }
     }
 
-    public function getConfiguration(string $feature): string {
-        return $this->features[$feature];
+    public function getRemoteConfiguration(string $feature): string {
+        return isset($this->features[$feature]) ? $this->features[$feature] : $this->defaultConfig[$feature];
     }
 
     public function enable(string $feature): bool {
