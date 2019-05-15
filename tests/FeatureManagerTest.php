@@ -68,6 +68,20 @@ class FeatureManagerTest extends TestCase {
         $this->assertEquals($expected, $instance->getRemoteConfiguration($featureName));
     }
 
+    function testGetConfigurationFromFeatureWithDefaultValue() {
+        $featureName = "feature-1";
+        $featureConfig = "new-relic";
+        $anotherFeatureName = "feature-2";
+        $anotherFeatureConfig = "data-dog";
+        $dataSource = $this->createMock(ConnectionDriver::class);
+        $dataSource->method('fetch')->willReturn([$featureName => $featureConfig]);
+
+        $instance = new FeatureManager($dataSource, [$anotherFeatureName => $anotherFeatureConfig]);
+        $expected = $anotherFeatureConfig;
+
+        $this->assertEquals($expected, $instance->getRemoteConfiguration($anotherFeatureName));
+    }
+
     function testUpdateAllConfiguration() {
         $featureName = "feature-1";
         $featureConfig = "new-relic";
