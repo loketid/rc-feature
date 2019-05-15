@@ -24,11 +24,11 @@ class RedisConnectionDriver implements ConnectionDriver {
     }
 
     function enable(string $feature):bool {
-        $this->client->hset($this->configKey, $feature, 1) == 1;
+        return $this->client->hset($this->configKey, $feature, 1) == 1;
     }
 
     function updateAllValue($config): bool {
-        // TODO: Implement updateAllValue() method.
+        return $this->client->hmset($this->configKey, $config) == 1;
     }
 }
 
