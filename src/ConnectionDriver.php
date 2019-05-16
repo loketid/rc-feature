@@ -3,7 +3,7 @@
 namespace RCFeature;
 
 interface ConnectionDriver {
-    function fetch();
+    function fetch(): array;
 
     function disable(string $feature): bool;
 

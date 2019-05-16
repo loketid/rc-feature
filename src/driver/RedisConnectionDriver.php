@@ -20,11 +20,13 @@ class RedisConnectionDriver implements ConnectionDriver {
     }
 
     function disable(string $feature): bool {
-        return $this->client->hSet($this->configKey, $feature, 0) == 1;
+        $result = $this->client->hSet($this->configKey, $feature, 0);
+        return $result == 1 || $result == 0;
     }
 
     function enable(string $feature): bool {
-        return $this->client->hSet($this->configKey, $feature, 1) == 1;
+        $result = $this->client->hSet($this->configKey, $feature, 1);
+        return $result == 1 || $result == 0;
     }
 
     function update($config): bool {
