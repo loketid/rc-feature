@@ -93,7 +93,8 @@ use RCFeature/Driver;
 $driverConfig = [
     "host" => "127.0.0.1",
     "port" => "4567",
-    "timeout" => 1000
+    "timeout" => 1000,
+    "prefix" => "string", // optional custom prefix
 ]
 
 $appName = "your-app-name"

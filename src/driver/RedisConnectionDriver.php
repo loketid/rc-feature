@@ -12,6 +12,10 @@ class RedisConnectionDriver implements ConnectionDriver {
     public function __construct(array $config, string $app_name = "rc-feature-client") {
         $this->client = new Redis();
         $this->client->connect($config['hostname'], $config['port'], $config['timeout']);
+        if(isset($config['prefix'])) {
+            $this->optPrefix = $config['prefix'];
+            $this->client->setOption(Redis::OPT_PREFIX, $this->optPrefix);
+        }
         $this->configKey = $app_name;
     }
 
