@@ -8,6 +8,14 @@ feature toggle and configuration fetch from remote server.
 - PHP 7.2
 - PHPUnit 8.1.4
 
+## Installation
+
+Use composer to include this library to your project.
+
+```
+composer require loketid/rc-feature
+```
+
 ## How to Test
 
 Run ```phpunit``` inside project folder.
