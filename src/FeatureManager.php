@@ -29,7 +29,12 @@ class FeatureManager {
     }
 
     public function getRemoteConfiguration(string $feature): ?string {
-        return isset($this->features[$feature]) ? $this->features[$feature] : $this->defaultConfig[$feature];
+        if (isset($this->features[$feature])) {
+            return $this->features[$feature];
+        } else if(isset($this->defaultConfig[$feature])) {
+            return $this->defaultConfig[$feature];
+        }
+        return null;
     }
 
     public function enable(string $feature): bool {
