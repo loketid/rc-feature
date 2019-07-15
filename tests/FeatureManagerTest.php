@@ -3,6 +3,7 @@
 namespace RCFeature;
 
 use PHPUnit\Framework\TestCase;
+use RCFeature\Driver\ConnectionDriver;
 
 class FeatureManagerTest extends TestCase {
     const CONDITION_ENABLED = 1;

@@ -1,6 +1,6 @@
 <?php
 
-namespace RCFeature;
+namespace RCFeature\Driver;
 
 interface ConnectionDriver {
     function fetch(): array;

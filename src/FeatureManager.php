@@ -1,6 +1,7 @@
 <?php
 
 namespace RCFeature;
+use RCFeature\Driver\ConnectionDriver;
 
 class FeatureManager {
 
